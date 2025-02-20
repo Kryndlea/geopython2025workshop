@@ -34,3 +34,6 @@ pixi run jupyter lab
 ```
 ## Acknowledgements
 The course material is a portion of [Spatial Data Science for Social Geography](https://martinfleischmann.net/sds/) taught by Martin Fleischmann and Anna Brazdova at Charles University in Prague. Thanks, Martin! 
+
+
+[![DOI](https://zenodo.org/badge/935386396.svg)](https://doi.org/10.5281/zenodo.14901057)
