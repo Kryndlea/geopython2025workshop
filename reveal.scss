@@ -1,0 +1,42 @@
+/*-- scss:defaults --*/
+// colors
+$body-color: #083183 !default;
+$body-bg: #fff !default;
+$presentation-heading-color: #083183 !default;
+$link-color: #f84260 !default;
+$selection-bg: #25b497 !default;
+
+// typography
+$font-family-sans-serif: "Helvetica", Arial, sans-serif !default;
+$presentation-font-size-root: 40px !default;
+
+// headings
+
+// layout
+$presentation-slide-text-align: left;
+
+/*-- scss:rules --*/
+
+.reveal p {
+    font-weight: 600;
+}
+
+.reveal h2,
+.reveal h3 {
+    padding-top: 10%;
+}
+
+.reveal .r-fit-text {
+    color: #f84260;
+}
+
+.reveal .center_image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.reveal blockquote {
+    color: #f84260;
+    border-left: .25rem solid #f84260;
+}

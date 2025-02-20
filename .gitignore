@@ -2,3 +2,4 @@
 slides_files/
 *.parquet
 .ipynb_checkpoints/
+.pixi/

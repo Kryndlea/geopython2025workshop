@@ -1,6 +1,12 @@
 ---
-title: "Explore space!"
-format: revealjs
+title: "Spatial relationships and how to use them"
+format: 
+    revealjs:
+        theme: [default, reveal.scss]
+        menu: false
+        transition: slide
+        navigation-mode: linear
+        controls-layout: edges
 ---
 
 > Everything is related to everything else, but near things are more related than distant things.
@@ -148,6 +154,68 @@ def plot(
     )
     return f, ax
 
+```
+
+
+```{python}
+# | fig-cap: Spatial calculations.
+f, ax = plt.subplots(figsize=(12, 8))
+regions.plot(color="#f84260", ax=ax, alpha=1)
+regions.boundary.plot(linewidth=.8, edgecolor="w", ax=ax)
+regions.iloc[[centre]].plot(ax=ax, color="#25b497")
+regions.centroid.plot(ax=ax, color="k", markersize=5)
+
+lines = []
+vals = []
+for nei in kernel10[centre].index:
+    lines.append(LineString([regions.centroid.iloc[centre], regions.centroid.iloc[nei]]))
+    vals.append(kernel10[centre][nei])
+gpd.GeoDataFrame({"w":vals}, geometry=lines).plot(ax=ax, color="k", linewidth=np.array(vals)**3 * 2000, alpha=.5)
+
+ax.set_axis_off();
+```
+
+---
+```{python}
+
+# | fig-cap: Spatial autocorrelation.
+
+import esda
+elections = gpd.read_file(
+    "https://martinfleischmann.net/sds/autocorrelation/data/cz_elections_2023.gpkg"
+)
+elections = elections.set_index("name")
+contiguity_r = graph.Graph.build_contiguity(elections, rook=False).transform('r')
+lisa = esda.Moran_Local(elections['PetrPavel'], contiguity_r)
+
+_ = lisa.plot(
+  elections,
+  crit_value=0.05,
+)
+```
+---
+
+```{python}
+# | fig-cap: Spatially constrained clustering.
+from sklearn import cluster
+simd = gpd.read_file(
+    "https://martinfleischmann.net/sds/clustering/data/edinburgh_simd_2020.gpkg"
+)
+
+queen = graph.Graph.build_contiguity(simd)
+agg5 = cluster.AgglomerativeClustering(n_clusters=5, connectivity=queen.sparse)
+subranks = [
+    "IncRankv2",
+    "EmpRank",
+    "HlthRank",
+    "EduRank",
+    "GAccRank",
+    "CrimeRank",
+    "HouseRank"
+]
+agg5.fit(simd[subranks])
+simd["agg_5"] = agg5.labels_
+_ = simd[["agg_5", 'geometry']].plot("agg_5", categorical=True, cmap="Set3").axis('off')
 ```
 
 # How to include space in statistics?
@@ -619,19 +687,6 @@ gpd.GeoDataFrame({"w":vals}, geometry=lines).plot(ax=ax, color="k", linewidth=np
 ax.set_axis_off();
 ```
 
----
-
-```{python}
-# | fig-cap: time to code
-f, ax = plt.subplots(figsize=(12, 8))
-plot(cont4.to_W(), regions, ax=ax, color="k", edge_kws=dict(linewidth=.1), node_kws=dict(s=0))
-ax.set_axis_off();
-```
-
-::: {.r-fit-text .absolute top=35% .fragment .fade-in}
-from libpysal import graph
-:::
-
 
 ---
 
@@ -764,7 +819,16 @@ How to measure it?
 :::
 
 ## Moran Plot
-
+```{python}
+import esda
+elections = gpd.read_file(
+    "https://martinfleischmann.net/sds/autocorrelation/data/cz_elections_2023.gpkg"
+)
+elections = elections.set_index("name")
+contiguity_r = graph.Graph.build_contiguity(elections, rook=False).transform('r')
+lisa = esda.Moran_Local(elections['PetrPavel'], contiguity_r)
+_ = lisa.plot_scatter()
+```
 ## Moran's I
 
 [Formal test of global spatial autocorrelation]{.fragment .fade-in}
@@ -814,9 +878,7 @@ Negative SA (*spatial outliers*)
 
 [Compares the observed map with many randomly generated ones to see how likely
 it is to obtain the observed associations for each location]{.fragment .fade-in}
-
 ---
 
-::: {.r-fit-text .absolute top=25%}
-import esda
-:::
+# Lets code!
+---
