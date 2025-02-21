@@ -3,7 +3,7 @@
 $body-color: #083183 !default;
 $body-bg: #fff !default;
 $presentation-heading-color: #083183 !default;
-$link-color: #f84260 !default;
+$link-color: #083183 !default;
 $selection-bg: #25b497 !default;
 
 // typography
@@ -27,7 +27,7 @@ $presentation-slide-text-align: left;
 }
 
 .reveal .r-fit-text {
-    color: #f84260;
+    color: #083183;
 }
 
 .reveal .center_image {
@@ -37,6 +37,6 @@ $presentation-slide-text-align: left;
 }
 
 .reveal blockquote {
-    color: #f84260;
-    border-left: .25rem solid #f84260;
+    color: #083183;
+    border-left: .25rem solid #083183;
 }
