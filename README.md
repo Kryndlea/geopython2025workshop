@@ -25,6 +25,7 @@ We’ll explain how to calculate both types of autocorrelation and show their re
 
 ## Running the material
 
+### Option 1
 If you'd like to run the notebook, you can create an environment using [Pixi](https://pixi.sh/latest/). See the Pixi [installation instructions](https://pixi.sh/latest/#__tabbed_1_2).
 
 With Pixi installed, clone the repository, open a command line, and start Jupyter Lab from the included Pixi environment. Pixi will automatically install all required dependencies and start the IDE with the notebook.
@@ -32,6 +33,15 @@ With Pixi installed, clone the repository, open a command line, and start Jupyte
 ```sh
 pixi run jupyter lab
 ```
+
+### Option 2
+Alternatively, you can use [Google Colab](https://colab.research.google.com/).
+1. Download the .ipynb files from the repository and upload them to Colab.
+2. Add a new cell at the top of the notebook, with this code and run it:
+```sh
+!pip install contextily libpysal mapclassify esda
+```
+
 ## Acknowledgements
 The course material is a portion of [Spatial Data Science for Social Geography](https://martinfleischmann.net/sds/) taught by Martin Fleischmann and Anna Brazdova at Charles University in Prague. Thanks, Martin! 
 
